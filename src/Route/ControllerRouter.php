@@ -77,7 +77,7 @@ class ControllerRouter
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public function listRoutableActionFromController(string $controllerClass, string $prefix = null)
+	public function listRoutableActionFromController($controllerClass, $prefix = null)
 	{
 		$reflection = new ReflectionClass($controllerClass);
 		$controllerName = Str::slug(Str::replaceLast('Controller', '', $reflection->getShortName()));
@@ -120,7 +120,7 @@ class ControllerRouter
 	/**
 	 * Determine if the given controller method is routable.
 	 */
-	public function isRoutable(ReflectionMethod $method, string $verb)
+	public function isRoutable(ReflectionMethod $method, $verb)
 	{
 		return in_array($verb, $this->_verbs);
 	}
@@ -150,7 +150,7 @@ class ControllerRouter
 	/**
 	 * Should we skipp this method
 	 */
-	public function isMethodSkipped(ReflectionMethod $method, string $controllerClass)
+	public function isMethodSkipped(ReflectionMethod $method, $controllerClass)
 	{
 		if ($method->class == $this->_illuminateController || ($this->_baseController && $method->class == $this->_baseController))
 		{
@@ -200,7 +200,7 @@ class ControllerRouter
 	 *
 	 * @return string
 	 */
-	protected function _buildRouteName(string $prefix, $parts)
+	protected function _buildRouteName($prefix, $parts)
 	{
 		$routeNames = [$prefix, $parts[ 'action' ]];
 		if ($parts[ 'verb' ] != 'any')
