@@ -54,7 +54,7 @@ class ControllerRouter
 	 */
 	protected $_skippInheritedMethods;
 
-	public function __construct(bool $skippInheritedMethods, ?string $baseController = null, ?string $illuminateController = null)
+	public function __construct($skippInheritedMethods, $baseController = null, $illuminateController = null)
 	{
 		if ($baseController)
 		{
@@ -77,7 +77,7 @@ class ControllerRouter
 	 * @return array
 	 * @throws \ReflectionException
 	 */
-	public function listRoutableActionFromController(string $controllerClass, string $prefix = null): array
+	public function listRoutableActionFromController(string $controllerClass, string $prefix = null)
 	{
 		$reflection = new ReflectionClass($controllerClass);
 		$controllerName = Str::slug(Str::replaceLast('Controller', '', $reflection->getShortName()));
@@ -120,7 +120,7 @@ class ControllerRouter
 	/**
 	 * Determine if the given controller method is routable.
 	 */
-	public function isRoutable(ReflectionMethod $method, string $verb): bool
+	public function isRoutable(ReflectionMethod $method, string $verb)
 	{
 		return in_array($verb, $this->_verbs);
 	}
@@ -128,7 +128,7 @@ class ControllerRouter
 	/**
 	 * Split the method names into multi-parts
 	 */
-	public function methodToRouteParts(ReflectionMethod $method): array
+	public function methodToRouteParts(ReflectionMethod $method)
 	{
 		$name = $method->getName();
 		$parts = explode('_', Str::snake($name));
@@ -150,7 +150,7 @@ class ControllerRouter
 	/**
 	 * Should we skipp this method
 	 */
-	public function isMethodSkipped(ReflectionMethod $method, string $controllerClass): bool
+	public function isMethodSkipped(ReflectionMethod $method, string $controllerClass)
 	{
 		if ($method->class == $this->_illuminateController || ($this->_baseController && $method->class == $this->_baseController))
 		{
@@ -168,7 +168,7 @@ class ControllerRouter
 	/**
 	 * build the url part for the action name
 	 */
-	protected function _buildUrlPartAction(array $parts): string
+	protected function _buildUrlPartAction(array $parts)
 	{
 		$isIndex = $parts[ 'action' ] == $this->_indexAction;
 
@@ -181,7 +181,7 @@ class ControllerRouter
 	/**
 	 * build the url part for the parameter
 	 */
-	protected function _buildUrlPartParameters(ReflectionMethod $method): string
+	protected function _buildUrlPartParameters(ReflectionMethod $method)
 	{
 		$uri = array();
 		foreach ($method->getParameters() as $parameter)
@@ -200,7 +200,7 @@ class ControllerRouter
 	 *
 	 * @return string
 	 */
-	protected function _buildRouteName(string $prefix, $parts): string
+	protected function _buildRouteName(string $prefix, $parts)
 	{
 		$routeNames = [$prefix, $parts[ 'action' ]];
 		if ($parts[ 'verb' ] != 'any')
