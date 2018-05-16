@@ -187,7 +187,7 @@ class ControllerRouter
 		foreach ($method->getParameters() as $parameter)
 		{
 			$parameterName = $parameter->getName();
-			$isOptional = $parameter->isDefaultValueAvailable() || ($parameter->hasType() && $parameter->getType()->allowsNull());
+			$isOptional = $parameter->isDefaultValueAvailable() || $parameter->allowsNull();
 			$uri[] = sprintf('{%s%s}', $parameterName, $isOptional ? '?' : '');
 		}
 
